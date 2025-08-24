@@ -7,5 +7,6 @@ By default a limited number of files from the meshcore tree are compiled (the on
 Some limitations:
 * libraries bundled with meshcore (in `arch` and `lib` must be provided (copying the dirs is ok), same for `boards`)
 * the `pre_build.py` script must be called from `platformio.ini` if you are using `variants` defined in the MeshCore tree (it will configure `INCLUDEDIRS` to point to the variants directory in `.pio/libdeps`)
+* ui helpers can't be included at the moment (but you can add them to your  sources manually ...)
 
 
