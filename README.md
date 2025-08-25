@@ -7,6 +7,4 @@ By default a limited number of files from the meshcore tree are compiled (the on
 Some limitations:
 * ~~libraries bundled with meshcore (in `arch` and `lib`) must be provided (copying the dirs is ok), same for~~ `boards` files from MC must be copied to the repository (if not provided by platform)
 * the `pre_build.py` script must be called from `platformio.ini` if you are using `variants` defined in the MeshCore tree (it will configure `INCLUDEDIRS` to point to the variants directory in `.pio/libdeps`) and copy MC libs in `libdeps`
-* ui helpers are not included at the moment (but you can add them to your  sources manually ...)
-
-
+* ~~ui helpers are not included at the moment (but you can add them to your  sources manually ...)~~ UI helpers are now included according to `DISPLAY_CLASS`, you'll have to provide the display support libraries (Adafruit GFX for instance)
