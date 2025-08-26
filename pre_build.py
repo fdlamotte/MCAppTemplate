@@ -39,6 +39,11 @@ for item in menv.get("BUILD_FLAGS", []):
     elif "EXCLUDE_FROM_EXAMPLE" in item :
         add_exampledir_to_incs = True
 
+    elif "MC_UI_FLAVOR" in item :
+        ui_name = item.split("=")[1]
+        ui_dir = f".pio/libdeps/{env_name}/MeshCore/examples/{example_name}/{ui_name}"
+        menv.Append(BUILD_FLAGS=[f"-I {ui_dir}"])
+
 # add advert name from PIOENV
 menv.Append(BUILD_FLAGS=[f"-D ADVERT_NAME=\'\"{env_name}\"\'"])
 
