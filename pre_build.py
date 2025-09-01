@@ -14,18 +14,35 @@ rp2040_platform = False
 add_exampledir_to_incs = False
 example_name = ""
 
-# add variant dir from MeshCore tree in libdeps to includes
+# Parse BUILD_FLAGS to customize build
 for item in menv.get("BUILD_FLAGS", []):
+    # add variant dir from MeshCore tree in libdeps to includes
     if "MC_VARIANT" in item :
         variant_name = item.split("=")[1]
         variant_dir = f".pio/libdeps/{env_name}/MeshCore/variants/{variant_name}"
         menv.Append(BUILD_FLAGS=[f"-I {variant_dir}"])
+
+    elif "ADD_BUILD_FLAGS" in item :
+        build_flags_file = f"build_flags/{item.split("=",1)[1]}"
+        with open(build_flags_file, "r", encoding="utf-8") as f:
+            for line in f:
+                if line.strip():
+                    menv.Append(BUILD_FLAGS=[line])
+        menv["BUILD_FLAGS"].remove(item)
+
     elif "STM32_PLATFORM" in item :
         stm32_platform = True
+
     elif "BUILD_EXAMPLE" in item :
         example_name = item.split("=")[1]
+
     elif "EXCLUDE_FROM_EXAMPLE" in item :
         add_exampledir_to_incs = True
+
+    elif "MC_UI_FLAVOR" in item :
+        ui_name = item.split("=")[1]
+        ui_dir = f".pio/libdeps/{env_name}/MeshCore/examples/{example_name}/{ui_name}"
+        menv.Append(BUILD_FLAGS=[f"-I {ui_dir}"])
 
 # add advert name from PIOENV
 menv.Append(BUILD_FLAGS=[f"-D ADVERT_NAME=\'\"{env_name}\"\'"])
