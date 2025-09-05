@@ -60,6 +60,9 @@ if not os.path.exists(ed_dir):
 lfs_dir = libdeps+"Adafruit_LittleFS_stm32/"
 if stm32_platform and not os.path.exists(lfs_dir):
     shutil.copytree(mc_dir+"arch/stm32/Adafruit_LittleFS_stm32", lfs_dir)
+# and add the STM32 Helpers in the tree (for InternalFileSystem)
+if stm32_platform :
+    menv.Append(BUILD_FLAGS=[f"-I .pio/libdeps/{env_name}/MeshCore/src/helpers/stm32"])
 
 if add_exampledir_to_incs:
     example_dir = f".pio/libdeps/{env_name}/MeshCore/examples/{example_name}"
